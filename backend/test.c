@@ -1,0 +1,1 @@
+#include<stdio.h> int main(){printf("ARIF"); return 0;}
