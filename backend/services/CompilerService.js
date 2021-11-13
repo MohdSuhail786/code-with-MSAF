@@ -17,11 +17,11 @@ const saveFile = (name,data) => {
   })
 }
 
-const compile = (fileName)=>{
+const compile = (fileName,compiler)=>{
   logger.info("Going to compile "+fileName)
   return new Promise((resolve,reject)=>{
     const filePath = path.join(__dirname,`../${fileName}`)
-    exec('gcc ' + filePath,(err,stdout,stderr)=>{
+    exec(compiler+' ' + filePath,(err,stdout,stderr)=>{
       if(err) {
         reject({
           err: true,
@@ -39,10 +39,10 @@ const compile = (fileName)=>{
   }) 
 }
 
-const runCode = ()=>{
+const runCode = (execFile)=>{
   logger.info("Going to run the compiled code")
   return new Promise((resolve,reject)=>{
-    exec('./a.out < '+'input.txt', (err, stdout, stderr) => {
+    exec(execFile+' < '+'input.txt', (err, stdout, stderr) => {
       if(err){
         reject({
           err: true,
@@ -62,12 +62,57 @@ const runCode = ()=>{
 
 const cExecute = async (data, input) => {
   try {
-    const programFile = "test.c";
+    const programFile = "program.c";
     const inputFile = "input.txt";
     await saveFile(programFile,data);
     await saveFile(inputFile,input);
-    await compile(programFile);
-    const output = await runCode()
+    await compile(programFile,'gcc');
+    const output = await runCode('./a.out')
+    return output;
+  } catch (err) {
+    logger.error(err)
+    return err;
+  }
+}
+
+const cppExecute = async (data,input) => {
+  try {
+    const programFile = "program.cpp";
+    const inputFile = "input.txt";
+    await saveFile(programFile,data);
+    await saveFile(inputFile,input);
+    await compile(programFile,'g++');
+    const output = await runCode('./a.out');
+    return output;
+  } catch (err) {
+    logger.error(err)
+    return err;
+  }
+}
+
+const pythonExecute = async (data,input) => {
+  try {
+    const programFile = "program.py";
+    const inputFile = "input.txt";
+    await saveFile(programFile,data);
+    await saveFile(inputFile,input);
+    const filePath = path.join(__dirname,`../${programFile}`)
+    const output = await runCode('python '+filePath);
+    return output;
+  } catch (err) {
+    logger.error(err)
+    return err;
+  }
+}
+
+const javaExecute = async (data,input) => {
+  try {
+    const programFile = "MSAF.java";
+    const inputFile = "input.txt";
+    await saveFile(programFile,data);
+    await saveFile(inputFile,input);
+    await compile(programFile,'javac')
+    const output = await runCode('java MSAF');
     return output;
   } catch (err) {
     logger.error(err)
@@ -76,5 +121,5 @@ const cExecute = async (data, input) => {
 }
 
 module.exports = {
-    cExecute
+    cExecute, cppExecute, pythonExecute, javaExecute
 }

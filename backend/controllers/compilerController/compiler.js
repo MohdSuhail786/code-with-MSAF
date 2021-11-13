@@ -1,5 +1,5 @@
 const {isEmpty} = require('../../middlewares/validator');
-const {cExecute} = require('../../services/CompilerService');
+const {cExecute, cppExecute, pythonExecute, javaExecute} = require('../../services/CompilerService');
 
 exports.compile = async (req,res) =>{
     const validationError = [];
@@ -12,7 +12,14 @@ exports.compile = async (req,res) =>{
     }
 
     const {code,input,lang} = req.body;
-    console.log(code)
-    const output = await cExecute(code,input);
+    console.log(code,input,lang)
+    let output = {};
+    switch(lang) {
+        case 'c': output = await cExecute(code,input); break;
+        case 'cpp': output = await cppExecute(code,input); break;
+        case 'python': output = await pythonExecute(code,input); break;
+        case 'java': output = await javaExecute(code,input); break;
+        default: output={errr:true,error:"language not defined"}
+    }
     return res.json(output);
 }
