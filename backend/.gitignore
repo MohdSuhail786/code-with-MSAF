@@ -1,2 +1,6 @@
 /node_modules
 /.env
+/access.log
+/test.c
+/a.out
+/input.txt

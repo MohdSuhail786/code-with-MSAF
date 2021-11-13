@@ -1,79 +1,79 @@
 const fs = require('fs');
 const path = require('path');
+const {logger} = require("./Logger")
 const { exec } = require('child_process');
 
 const saveFile = (name,data) => {
-    return new Promise((resolve,reject)=> {
-        fs.writeFile(name,data,err =>{
-            if(err) {
-                console.log(err);
-                reject();
-            } else {
-                console.log("File saved");
-                resolve();
-            }
-        })
-    })
+  logger.info("Going to save file : "+name)  
+  return new Promise((resolve,reject)=> {
+      fs.writeFile(name,data,err =>{
+          if(err) {
+              reject();
+          } else {
+              logger.info("File "+name+" saved successfully\nData : "+data)
+              resolve();
+          }
+      })
+  })
 }
 
-const cExecute = (data, input) => {
-    return new Promise((resolve, reject)=>{
-        const fileName = "test.c"
-        saveFile(fileName, data)
-          .then(()=>{
-            // Create Input file
-            fs.writeFile("input.txt", input, function(err) {
-              if(err) {
-                  console.log(err);
-                  reject()
-              } 
-            });  
-              // FILE SAVED SUCCESSFULLY
-              // Generate the output file for it
-              const filePath = path.join(__dirname,"../test.c")
-              exec('gcc '+filePath, (err, stdout, stderr) => {
-                  if (err) {
-                    // IF COMPILATION ERROR
-                    console.error(`exec error: ${err}`);
-                    resolve({
-                      err: true,
-                      output: err,
-                      error: stderr
-                    })
-                  }
-                  
-                  // SUCCESSFULL COMPILATION EXECUTING
-                  console.log("SUCCESSFULLY COMPILED")
-                  exec('./a.out < '+'input.txt', (err, stdout, stderr) => {
-                    if(err){
-                      console.log("ERROR "+err)
-                      resolve({
-                        err: true,
-                        output: err,
-                        error: stderr
-                      })
-                    }
-          
-                    console.log("OUTPUT ", stdout)
-                    resolve({
-                      err: false,
-                      output: stdout
-                    })
-                  })
-                })
-  
-          })
-          .catch(()=>{
-            console.log("ERROR SAVE FILE")
-            const err = {
-              err: true,
-              output: "Internal Server Error!"
-            }
-            resolve(err)
-          })
-    }) 
-  }
+const compile = (fileName)=>{
+  logger.info("Going to compile "+fileName)
+  return new Promise((resolve,reject)=>{
+    const filePath = path.join(__dirname,`../${fileName}`)
+    exec('gcc ' + filePath,(err,stdout,stderr)=>{
+      if(err) {
+        reject({
+          err: true,
+          output: err,
+          error: stderr
+        })
+      } else {
+        logger.info("Successfully Compiled")
+        resolve({
+          err:false,
+          output: stdout
+        })
+      }
+    })
+  }) 
+}
 
+const runCode = ()=>{
+  logger.info("Going to run the compiled code")
+  return new Promise((resolve,reject)=>{
+    exec('./a.out < '+'input.txt', (err, stdout, stderr) => {
+      if(err){
+        reject({
+          err: true,
+          output: err,
+          error: stderr
+        })
+      } else {
+        logger.info("Code run successfully")
+        resolve({
+          err: false,
+          output: stdout
+        })
+      }
+    })
+  })
+}
+
+const cExecute = async (data, input) => {
+  try {
+    const programFile = "test.c";
+    const inputFile = "input.txt";
+    await saveFile(programFile,data);
+    await saveFile(inputFile,input);
+    await compile(programFile);
+    const output = await runCode()
+    return output;
+  } catch (err) {
+    logger.error(err)
+    return err;
+  }
+}
 
 module.exports = {
     cExecute
