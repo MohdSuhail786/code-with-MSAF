@@ -65,14 +65,34 @@
     z-index: 1;
 
 }
-
+.ques_head{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-bottom: 5px solid rgb(230, 218, 218);
+}
 .output{
     display: flex;
     margin-left: 16px;
     height: 150px;
 }
 
+.input{
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: whitesmoke;
+    padding: 10px;
+    margin: 23px;
 
+}
+
+.input div{
+    margin:10px;
+}
 .active{
     display: block;
     background-color: black;
