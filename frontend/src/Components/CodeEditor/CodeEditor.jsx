@@ -13,15 +13,16 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./CodeEditor.css";
 import { fetchData } from "../../middleware/RequestHandler";
-import CircularProgress from '@mui/material/CircularProgress';
-
+import CircularProgress from "@mui/material/CircularProgress";
 
 function CodeEditor() {
   const [codeLanguage, setCodeLanguage] = React.useState("c");
   const [theme, setTheme] = React.useState("xcode");
-  const [textCode, setTextCode]= React.useState("");
-  const [loading, setLoading]= React.useState(false);
-
+  const [textCode, setTextCode] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [showOutput, setShowOutput]= React.useState(true);
+  const [storeOutput, setStoreOutput]= React.useState(false);
+  const [storeOutputError, setStoreOutputError]= React.useState(false);
   const [text, setText] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
@@ -40,84 +41,90 @@ function CodeEditor() {
       setIsCopied(false);
     }, 1000);
   };
- let payload ={
-   "code":textCode,
-   "lang":codeLanguage,
+  let payload = {
+    code: textCode,
+    lang: codeLanguage,
+    input: "1",
+  };
 
- }
-
-function submitCode(){
-  fetchData('/code/submit',{method:"POST",body:JSON.stringify(payload)});
-  setLoading(true)
-}
+  async function submitCode() {
+    setLoading(true);
+   const codeData =  await fetchData("/code/submit", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
    
-  function sourceCode(c) {
-    // console.log(c);
-    setTextCode(c);
     
+    if(!codeData.err && codeData){
+      
+      setLoading(false);
+      console.log(codeData.output)
+      setStoreOutput(codeData.output);
+      setStoreOutputError(false);
+      
+      return;
+    }
+    setStoreOutputError(true);
+    setLoading(false);
+  }
+
+  React.useEffect(() => {
+    setShowOutput(true);
+  }, [storeOutput])
+
+  function sourceCode(c) {
+    console.log(c);
+    setTextCode(c);
   }
 
   return (
     <div className="ques_code">
       <div className="cq_des">
-        <div  className="ques_head"> 
-        <h1>Largest Element in Array </h1>
-        <div>Basic</div>
+        <div className="ques_head">
+          <h1>Largest Element in Array </h1>
+          <div>Basic</div>
         </div>
-        
+
         <p style={{ display: "flex", flexWrap: "wrap" }}>
-        Given an array A[] of size n. The task is to find the largest element in it.
+          Given an array A[] of size n. The task is to find the largest element
+          in it.
         </p>
-        <h4 style={{textAlign: "start"}}> Example 1:</h4>
-       <div className="input">
-         <div>
-       n = 5 
-       </div> <div>
-        A[] = {1, 8, 7, 56, 90}
+        <h4 style={{ textAlign: "start" }}> Example 1:</h4>
+        <div className="input">
+          <div>n = 5</div> <div>A[] = {(1, 8, 7, 56, 90)}</div>
+          <div>Output: 90</div>
+          <div>Explanation: The largest element of given array is 90.</div>
         </div>
-        <div>
-        Output:
-        90
-        </div>
-        <div>
-        Explanation:
-The largest element of given array is 90.
+        <h4 style={{ textAlign: "start" }}> Example 2:</h4>
+        <div className="input">
+          <div>n = 5</div> <div>A[] = {(1, 8, 7, 56, 90)}</div>
+          <div>Output: 90</div>
+          <div>Explanation: The largest element of given array is 90.</div>
         </div>
 
-       </div>
-       <h4 style={{textAlign: "start"}}> Example 2:</h4>
-       <div className="input">
-         <div>
-       n = 5 
-       </div> <div>
-        A[] = {1, 8, 7, 56, 90}
-        </div>
-        <div>
-        Output:
-        90
-        </div>
-        <div>
-        Explanation:
-The largest element of given array is 90.
+        <h3 style={{ display: "flex", alignItems: "flexStart" }}>
+          {" "}
+          Your Task:{" "}
+        </h3>
+        <div style={{ textAlign: "start" }}>
+          You don't need to read input or print anything. Your task is to
+          complete the function largest() which takes the array A[] and its size
+          n as inputs and returns the maximum element in the array.
         </div>
 
-       </div>
-
-       
-      <h3 style={{display:"flex",alignItems:"flexStart"}}> Your Task:  </h3> 
-      <div style={{textAlign:"start"}}>
-      You don't need to read input or print anything. Your task is to complete the function largest() which takes the array A[] and its size n as inputs and returns the maximum element in the array.
-      </div>
-
-      <div style={{textAlign:"start"}}>
-    <h3>Constraints:</h3>  
- <div>  1   <span>&#62;</span> <span>&#61;</span>n <span>&#60;</span><span>&#61;</span> 10<sup>3</sup></div>
- <div>
-0 
-<span>&#62;</span> <span>&#61;</span>A[i] <span>&#60;</span><span>&#61;</span> 10<sup>3</sup></div>
-Array may contain duplicate elements. 
-      </div>
-        
+        <div style={{ textAlign: "start" }}>
+          <h3>Constraints:</h3>
+          <div>
+            {" "}
+            1 <span>&#62;</span> <span>&#61;</span>n <span>&#60;</span>
+            <span>&#61;</span> 10<sup>3</sup>
+          </div>
+          <div>
+            0<span>&#62;</span> <span>&#61;</span>A[i] <span>&#60;</span>
+            <span>&#61;</span> 10<sup>3</sup>
+          </div>
+          Array may contain duplicate elements.
+        </div>
       </div>
       <div className="code_editor">
         <div
@@ -128,7 +135,6 @@ Array may contain duplicate elements.
             alignItems: "center",
           }}
         >
-         
           <Box sx={{ minWidth: 120, margin: 2 }}>
             <FormControl fullWidth>
               <Select
@@ -142,37 +148,43 @@ Array may contain duplicate elements.
               </Select>
             </FormControl>
           </Box>
-        <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:4}}>
-        <div style={{margin:10}}>
-            <CopyToClipboard text={textCode} onCopy={onCopyText}>
-          
-              <div className="copy-area">
-                <button>Copy to Clipboard</button>
-                <span className={`copy-feedback ${isCopied ? "active" : ""}`}>
-                  Copied!
-                </span>
-              </div>
-            </CopyToClipboard>
-          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 4,
+            }}
+          >
+            <div style={{ margin: 10 }}>
+              <CopyToClipboard text={textCode} onCopy={onCopyText}>
+                <div className="copy-area">
+                  <button>Copy to Clipboard</button>
+                  <span className={`copy-feedback ${isCopied ? "active" : ""}`}>
+                    Copied!
+                  </span>
+                </div>
+              </CopyToClipboard>
+            </div>
 
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={codeLanguage}
-                onChange={handleChangeLanguage}
-              >
-                <MenuItem value="c">C </MenuItem>
-                <MenuItem value="cpp">C++</MenuItem>
-                <MenuItem value="java">Java</MenuItem>
-                <MenuItem value="python">Python</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={codeLanguage}
+                  onChange={handleChangeLanguage}
+                >
+                  <MenuItem value="c">C </MenuItem>
+                  <MenuItem value="cpp">C++</MenuItem>
+                  <MenuItem value="java">Java</MenuItem>
+                  <MenuItem value="python">Python</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
           </div>
         </div>
-        <div style={{ width: "56vw", borderBottom:"6px solid whiteSmoke" }}>
+        <div style={{ width: "56vw", borderBottom: "6px solid whiteSmoke" }}>
           <AceEditor
             width="inherit"
             mode="java"
@@ -190,8 +202,23 @@ Array may contain duplicate elements.
         </div>
         <div className="output">
           <div>Output</div>
-      <div style={{display:"flex",justifyContent:"center",alignItems:"center",width:"100%"}}>  { loading && <CircularProgress color="secondary" />} </div>
-
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              backgroundColor:"black",
+              color:"white",
+              flexDirection:"coulmn"
+            }}
+          >
+            {" "}
+            {loading && <CircularProgress color="secondary" />}{" "}
+            {console.log(storeOutput)}
+            {storeOutputError &&  <div style={{color:"red"}}>Compile Error</div>}
+           {showOutput && <div> {storeOutput}</div>}
+          </div>
         </div>
       </div>
     </div>

@@ -18,6 +18,8 @@
     display: flex;
     flex-direction: column;
     border: 2px solid whitesmoke;
+    position: sticky;
+    top:90px
 }
 
 #UNIQUE_ID_OF_DIV{
@@ -73,10 +75,17 @@
     border-bottom: 5px solid rgb(230, 218, 218);
 }
 .output{
+ 
     display: flex;
     margin-left: 16px;
     height: 150px;
+    flex-direction: column;
+    background-color: black;
+    color: white;
+    align-items: flex-start;
+    padding: 10px;
 }
+
 
 .input{
    
