@@ -15,35 +15,6 @@ function Signin() {
   const [text,setText]=React.useState("password");
   const [snackBar,setSnackBar] = React.useState({state:false,message:''})
   const [passwordErr, setPasswordErr]=React.useState(false);
-//   const router = useHistory();
-
-//   useEffect(async()=>{
-//     const response = await (await fetch(process.env.REACT_APP_PROXY+'/verifyAdmin',{method:"GET",headers:{'Authorization':localStorage.accessToken}})).json();
-    
-//     if(response.message == "Authorized")
-//         router.push('/')
-// },[])
-
-//   const signin = async () => {
-//     const payload = JSON.stringify({
-//       email,password
-//     })
-//     let response = await fetch(process.env.REACT_APP_PROXY+'/login',{method:'POST',body:payload,headers:{'Content-Type':'application/json'}});
-//     response = await response.json();
-//     setSnackBar({state:false,message:''})
-//     if(response.status && response.user.type == 'admin') {
-//       localStorage.user = JSON.stringify(response.user);
-//       localStorage.accessToken = response.accessToken;
-//       localStorage.refreshToken = response.refreshToken;
-//       setSnackBar({state:true,message:response.message})
-//       setTimeout(() => {
-//         router.push('/')
-//       }, 2000);
-//     }
-//     else {
-//       setSnackBar({state:true,message:"You are not authorized to continue"})
-//     }
-//   } 
 
   const validateEmail = (e) => {
     var email = e.target.value
