@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 const port = process.env.PORT || 8000
 
-app.use('/api/v1/',require('./routes/api'))
+app.use('',require('./routes/api'))
 
 app.listen(port, ()=>{
     console.log(`Server started at port ${port}`)
