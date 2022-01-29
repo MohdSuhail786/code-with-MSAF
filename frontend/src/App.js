@@ -1,6 +1,5 @@
 import {
   BrowserRouter as Router,
-  HashRouter,
   useRoutes,
 } from "react-router-dom";
 import CodeEditor from "./Components/CodeEditor/CodeEditor";
@@ -26,9 +25,9 @@ function App() {
 
   return (
     <div className="App">
-      <HashRouter>
+      <Router>
         <RoutingComponent />
-      </HashRouter>
+      </Router>
     </div>
   );
 }
