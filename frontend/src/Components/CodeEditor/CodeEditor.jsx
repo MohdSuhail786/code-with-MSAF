@@ -81,7 +81,7 @@ function CodeEditor() {
     <div className="ques_code">
       <div className="cq_des">
         <div className="ques_head">
-          <h1>Largest Element in Array </h1>
+          <h1>Largest Element </h1>
           <div>Basic</div>
         </div>
 
