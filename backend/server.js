@@ -4,10 +4,13 @@ const app = express()
 const bodyParser = require('body-parser')
 const { logger } = require('./services/Logger')
 const cors = require('cors')
+const { connectToMongoDB } = require('./config/db')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+connectToMongoDB()
 
 const port = process.env.PORT || 8000
 

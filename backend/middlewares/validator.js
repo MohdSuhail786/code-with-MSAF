@@ -16,3 +16,16 @@ exports.isEmpty = (val) =>{
     }
     return false;
 }
+
+exports.validate = (obj,fields) => {
+    const validationError = [];
+    
+    fields.forEach(field => {
+        if(this.isEmpty(obj[field])) validationError.push(`${field} is required`)
+    });
+
+    if(validationError.length) {
+        return {ok:false,error:validationError[0]}
+    }
+    return {ok:true,error:null}
+}
