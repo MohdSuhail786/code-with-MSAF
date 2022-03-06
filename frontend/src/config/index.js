@@ -19,7 +19,7 @@ export const role = {
     organization: 'organization'
 }
 
-export const FRONT_END_ROUTE = 'http://localhost:3000/'
+export const FRONT_END_ROUTE = 'https://www.codingworms.com/'
 export const DEFAULT_PRACTICE_ROUTE = '/practice?sort=ASC'
 export const DEFAULT_IDE_ROUTE = '/ide'
 
