@@ -1,0 +1,136 @@
+.signup_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+}
+
+.signup_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;    
+    padding: 30px;
+
+}
+
+.signup_header span {
+    color: #7367f0;
+    font-size: 1.714rem;
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.signup_header img {
+    height: 28px;
+}
+
+.signup_body {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+.signup_body_svg {
+    flex-basis: 62%;
+    height: 100%;
+    flex: 1;
+    align-self: center;
+    padding: 4rem;
+    width: 100%;
+}
+
+.signup_body_content {
+    flex-basis: 38%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0px 4rem;
+}
+
+.signup_body_content h2 {
+    color: #5e5873;
+    font-weight: 500;
+    font-size: 2rem;
+    text-align: start;
+    line-height: 1.2;
+}
+
+.signup_body_subheading {
+    margin: 20px 0px;
+}
+.signup_body_subheading span {
+    font-weight: 200;
+    color: #939caa;
+}
+.signup_form span{
+    display: flex;
+    flex-direction: column;
+    color: #939caa;
+    letter-spacing: 0.05rem;
+    font-size: 0.9rem;
+    margin: 20px 0px;
+}
+
+.signup_form div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+.policy {
+    color: #7367f0;
+}
+
+.largecheckbox {
+    flex-basis: 10%;
+    transform: scale(1.5);
+    text-align: start;
+    margin-bottom: 2px;
+    margin-left: -5px;
+}
+
+.signup_form input {
+    padding: 5px 8px;
+    font-size: 1rem;
+    letter-spacing: 0.05rem;
+    margin-top: 5px;
+}
+
+label {
+    color: #939caa;
+}
+
+.signup_button {
+    border-color: #7367f0;
+    background-color: #7367f0;
+    box-shadow: none;
+    text-align: center;
+    border: 1px solid transparent;
+    padding: 0.786rem 1.5rem;
+    border-radius: 0.358rem;
+    color: #fff;
+    overflow: hidden;
+    margin-top: 20px;
+    font-weight: 500;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(189, 194, 194);
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+  }

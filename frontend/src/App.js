@@ -1,25 +1,25 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
-import CodeEditor from "./Components/CodeEditor/CodeEditor";
-import Signup from "./Components/Signup/Signup";
-import Signin from "./Components/Signin/Signin";
+import AppRoutes from "./routes/Routes";
+import Alert from "./components/utilityComponent/Alert/Alert";
+import AppContext from "./context/AppContext";
+import useSnackbar from "./components/utilityComponent/customHooks/useSnackbar";
+import useAuth from "./components/utilityComponent/customHooks/useAuth";
+import {store} from "./redux/storeConfig/store"
+import {Provider} from 'react-redux'
+import "./App.css"
+import { withRouter } from "react-router-dom";
 
 
 function App() {
+  const {snackbar,showSnackbar,closeSnackbar} = useSnackbar()
+  const {userRole,setUserRole} = useAuth()
 
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route exact path='/' element={<CodeEditor />} />
-          <Route exact path='/signup' element={<Signup />} />
-          <Route exact path='/login' element={<Signin />} />
-        </Routes>
-      </Router>
-    </div>
+    <Provider store = {store}>
+      <AppContext.Provider value={{showSnackbar,userRole,setUserRole}}>  
+        <Alert {...snackbar} onClose={closeSnackbar}/>
+        <AppRoutes />
+      </AppContext.Provider>
+    </Provider>
   );
 }
 

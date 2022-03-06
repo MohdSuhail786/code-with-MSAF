@@ -1,0 +1,21 @@
+.template-container {
+    padding: 10px;
+    background-color: white;
+    width: 75%;
+    text-align: center;
+    box-shadow: -2px 0 4px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    margin: auto;
+}
+
+.input-group textarea {
+    height: 50%;
+}
+
+.input-group textarea:focus {
+    outline: none !important;
+}
+
+.template-container .nav .nav-item {
+    flex: 1;
+}

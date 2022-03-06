@@ -1,7 +1,10 @@
 // const proxy = process.env.REACT_APP_API_KEY;
-const proxy = process.env.REACT_APP_API_LOCALHOST_KEY;
+
+import { setUserData } from "../utils";
+
+const proxy = "https://codingworms.herokuapp.com";
+// const proxy = "http://localhost:8000";
 export async function fetchData(path,requestOptions) {
-    let response;
     
     requestOptions.headers = {
         ...requestOptions.headers,
@@ -10,43 +13,24 @@ export async function fetchData(path,requestOptions) {
         'Authorization' : localStorage.accessToken
     } 
 
-    console.log(requestOptions)
-          await fetch(proxy + path,requestOptions).then(res => res.json()).then(async data =>{
-              console.log(data)
-          if (data.authStatus == undefined || data.authStatus == null) {
-            console.log("AUTHORIZED")
-            response= data; 
-            return response;
-          }
-          else {
-            console.log("Message is unauthorized Try to refresh session")
-            const payload = {
-                refreshToken:localStorage.refreshToken
-            }
-    
-            const requestoptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }
-            console.log("Generate new key with refresh token")
-            await fetch(`${proxy}/refresh_session`,requestoptions).then(res => res.json()).then(data=>{
-                if (data.status) {
-                    console.log("access token refreshed by using refreshtoken",data)
-                    localStorage.accessToken  = data.accessToken
-                    localStorage.refreshToken = data.refreshToken
-                    requestOptions.headers = {
-                        ...requestOptions.headers,
-                        'Authorization' : localStorage.accessToken
-                    } 
-                    response = fetchData(path,requestOptions)
-                }
-                else {
-                    console.log("Refresh token is also expired")
-                    response = null;
-                }
-            })
-          }
-      })
-      return response;
+    const res = await (await fetch(proxy+path,requestOptions)).json()
+    if(res.status !== 'unauthorized') {
+        return {...res,auth:true}
+    }
+    const payload = {
+        token: localStorage.refreshToken
+    }
+    const newRequestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    }
+
+    const {data,status} = await(await fetch(proxy+'/refresh-token',newRequestOptions)).json()
+    if(status === 'unauthorized') {
+        return {auth:false}
+    }
+
+    setUserData(data.user,data.accessToken,data.refreshToken)
+    return await fetchData(path,requestOptions)
 }
