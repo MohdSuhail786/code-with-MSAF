@@ -49,7 +49,19 @@ exports.getQuestion = async (req,res) => {
         const {problemCode} = req.query
         const question = await fetchQuestion(problemCode)
         const testcases = await fetchTestcase(problemCode)
-        return res.status(200).json({data:{question,testcases},status:true})
+        if(!question || testcases.length == 0) {
+            throw "Question not found"
+        }
+        const template = `
+        #include<iostream>
+        using namespace std;
+
+        int main() {
+            // write your code here
+            return 0;
+        }
+        `
+        return res.status(200).json({data:{question,testcases,template},status:true})
     } catch (err) {
         logger.error(err)
         return res.status(500).json({data:err,status:false})

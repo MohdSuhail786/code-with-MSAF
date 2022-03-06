@@ -26,7 +26,7 @@ const updateTestcase = async (testcase,id) => {
 
 const fetchTestcase = async (problemCode) => {
     try {
-        logger.info(`Going to fetch testcase : id = ${problemCode}`)
+        logger.info(`Going to fetch testcase : problemCode = ${problemCode}`)
         const testcase = await Testcase.find({problemCode})
         logger.info(`Testcase fetched successfully`)
         return testcase
