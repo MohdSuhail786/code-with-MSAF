@@ -7,7 +7,7 @@ const HomeCarousel = () => {
         <div className="m-image-with-text__image-1">
           <a href={DEFAULT_PRACTICE_ROUTE}>
             <img
-              src="https://cdn.codechef.com/download/banner/1646188802.png"
+              src="https://cdn.codechef.com/download/banner/1646624941.png"
               className="m-slider__desktop-image"
             />
             <img
