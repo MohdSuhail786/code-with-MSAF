@@ -8,18 +8,27 @@
   
 }
 .cq_des{
-    width: 40%;
     border: 2px solid whitesmoke;
     padding: 10px;
-
-
+    position: fixed;
+    left: 0;
+    overflow-y: scroll;
+    height: 100%;
+    width: 44%;
+    bottom: 0px;
+    top: 70px;
+    flex: 1;
 }
 .code_editor{
     display: flex;
     flex-direction: column;
     border: 2px solid whitesmoke;
-    position: sticky;
-    top:90px
+    position: fixed;
+    background-color: white;
+    right: 0px;
+    height: 100%;
+    top:80px;
+    flex: 1;
 }
 
 #UNIQUE_ID_OF_DIV{
@@ -30,7 +39,10 @@
     display: flex;
     justify-content: right;
     align-items: center;
+    border-bottom: 6px solid whitesmoke;
     margin: 10px;
+    margin-left: 0px;
+    padding-bottom: 10px;
 }
 .run_code button{
     background-color: lightgreen;
@@ -75,13 +87,15 @@
     border-bottom: 5px solid rgb(230, 218, 218);
 }
 .output{
- 
+    overflow: scroll;
+    width: 55vw;
     display: flex;
     margin-left: 16px;
-    height: 150px;
     flex-direction: column;
-    background-color: black;
     color: white;
+    flex: 1;
+    text-align: start;
+    margin-bottom: 80px;
     align-items: flex-start;
     padding: 10px;
 }

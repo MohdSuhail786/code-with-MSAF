@@ -6,24 +6,29 @@ import "brace/mode/javascript";
 import "brace/theme/monokai";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
+import CodeEditor from "../CodeEditor/CodeEditor"
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "./Problem.css";
 import { fetchData } from "../../../middleware/RequestHandler";
-import CircularProgress from "@mui/material/CircularProgress";
+import CircularProgressBar from "../CircularProgress/CircularProgress";
 import AppContext from "../../../context/AppContext";
 import { useParams } from "react-router-dom";
 import useFetch from "../customHooks/useFetch";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import HomeHeader from "../HomeHeader/HomeHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { runCode } from "./store/action";
+import {hideProgressBar, showProgressBar} from "../CircularProgress/store/action"
+import { isUserLoggedIn } from "../../../utils";
 
 function Problem() {
   const appContext = useContext(AppContext);
   const {_problemCode} = useParams();
   // const [state,setState] = useState({question:{},testcases:[]})
-
+  const dispatch = useDispatch()
   const [codeLanguage, setCodeLanguage] = React.useState("c");
   const [theme, setTheme] = React.useState("xcode");
   const [textCode, setTextCode] = React.useState("");
@@ -33,7 +38,9 @@ function Problem() {
   const [storeOutputError, setStoreOutputError]= React.useState(false);
   const [text, setText] = useState("");
   const [isCopied, setIsCopied] = useState(false);
-
+  const code = useSelector(state => state.code)
+  const result = useSelector(state => state.result)
+  const progressBar = useSelector(state => state.progressBar)
   const {data,waiting,error} = useFetch(`/question?problemCode=${_problemCode}`,"GET")
   console.log(data,error)
 
@@ -53,30 +60,39 @@ console.log(_problemCode)
     }, 1000);
   };
   let payload = {
-    code: textCode,
+    problem_code: _problemCode,
+    code: code[_problemCode],
     lang: codeLanguage,
-    input: "1",
   };
 
-  async function submitCode() {
-    setLoading(true);
-   const codeData =  await fetchData("/code/submit", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
-   
-    
-    if(!codeData.err && codeData){
-      
-      setLoading(false);
-      console.log(codeData.output)
-      setStoreOutput(codeData.output);
-      setStoreOutputError(false);
-      
-      return;
+  async function handleRunCode() {
+    if(!isUserLoggedIn()) {
+      return appContext.showLoginPopup({callback:async()=>{
+        payload = {...payload,type:"sample"}
+        dispatch(showProgressBar())
+        await dispatch(runCode(payload))
+        dispatch(hideProgressBar())
+      }})
     }
-    setStoreOutputError(true);
-    setLoading(false);
+    payload = {...payload,type:'sample'}
+    dispatch(showProgressBar())
+    await dispatch(runCode(payload))
+    dispatch(hideProgressBar())
+  }
+
+  async function handleSubmitCode() {
+    if(!isUserLoggedIn()) {
+      return appContext.showLoginPopup({callback:async()=>{
+        payload = {...payload,type:null}
+        dispatch(showProgressBar())
+        await dispatch(runCode(payload))
+        dispatch(hideProgressBar())
+      }})
+    }
+    payload = {...payload,type:null}
+    dispatch(showProgressBar())
+    await dispatch(runCode(payload))
+    dispatch(hideProgressBar())
   }
 
   React.useEffect(() => {
@@ -90,7 +106,7 @@ console.log(_problemCode)
 
   if(waiting) {
     return <>
-      <CircularProgress style={{position:'absolute',top:'49%',left: '49%'}} color="primary" />
+      {/* <CircularProgress style={{position:'absolute',top:'49%',left: '49%'}} color="primary" /> */}
     </>
   }
 
@@ -103,7 +119,6 @@ console.log(_problemCode)
   return (
     <>
     <HomeHeader />
-    <div className="ques_code">
       <div className="cq_des">
         <div className="ques_head">
           <h1>{data.question.name} </h1>
@@ -142,7 +157,7 @@ console.log(_problemCode)
         </>
         }
 
-        <div style={{ textAlign: "start" }}>
+        <div style={{ textAlign: "start",marginBottom:100 }}>
           <h3>Constraints:</h3>
           {data.question.constraints.map((constraint)=>{
           return <>
@@ -155,7 +170,6 @@ console.log(_problemCode)
         <div
           style={{
             display: "flex",
-
             justifyContent: "space-between",
             alignItems: "center",
           }}
@@ -168,7 +182,7 @@ console.log(_problemCode)
                 value={theme}
                 onChange={handleChangeTheme}
               >
-                <MenuItem value="monokai">Monokai </MenuItem>
+                <MenuItem value="monokai">Dark </MenuItem>
                 <MenuItem value="xcode">Light</MenuItem>
               </Select>
             </FormControl>
@@ -209,45 +223,70 @@ console.log(_problemCode)
             </Box>
           </div>
         </div>
-        <div style={{ width: "56vw", borderBottom: "6px solid whiteSmoke" }}>
-          <AceEditor
-            width="inherit"
-            mode="javascript"
-            theme={theme}
-            onChange={sourceCode}
-            name="UNIQUE_ID_OF_DIV"
-            showPrintMargin={true}
-            value={data.template}
-            editorProps={{
-              $blockScrolling: true,
-            }}
-          />
+        <div style={{ width: "56vw", borderBottom: "6px solid whiteSmoke",flex:1,overflowY:"scroll" }}>
+          <CodeEditor lang={codeLanguage} problem_code={_problemCode}/>
         </div>
         <div className="run_code">
-          <button onClick={submitCode}>Run Code</button>
+          <button onClick={handleRunCode}>Run Code</button>
+          <button style={{marginLeft:10}} onClick={handleSubmitCode}>Submit Code</button>
         </div>
+          <div style={{margin:"0px 26px",display:'flex',justifyContent:'space-between'}}>
+            <span>Result</span>
+            {result.type == "hidden" && result.solved && !progressBar && <span style={{color:"green"}}>Solved</span>}
+            {result.type == "hidden" && !result.solved && !progressBar && <span style={{color:"red"}}>Some test cases are failed</span>}
+          </div>
         <div className="output">
-          <div>Output</div>
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
               width: "100%",
-              backgroundColor:"black",
-              color:"white",
-              flexDirection:"coulmn"
+              flexDirection:"column",
             }}
           >
-            {" "}
-            {loading && <CircularProgress color="secondary" />}{" "}
-            {console.log(storeOutput)}
+            <CircularProgressBar />
+            {!progressBar && result.output.map(op => {
+              if(op.status) {
+                return <div style={{display:'flex',flexDirection:'column',color:"blue",marginBottom:10,background:op.opStatus ? "#B6FFCE":"#FFA8A8",padding:20,width:'100%'}}>{
+                  <>
+                    <h5>Input</h5>
+                    <div style={{display:'flex',flexDirection:'column',fontWeight:'bolder',padding:5}}>{op.input.map(i => <span>{i}</span>)}</div>
+                    <h5>Output</h5>
+                    <div style={{display:'flex',flexDirection:'column',fontWeight:'bolder',padding:5}}>{op.output.map(o => <span>{o}</span>)}</div>
+                    <h5>Expected Output</h5>
+                    <div style={{display:'flex',flexDirection:'column',fontWeight:'bolder',padding:5}}>{op.expectedOutput.map(o => <span>{o}</span>)}</div>
+                  </>
+                }</div>
+              }
+              return <div style={{display:'flex',flexDirection:'column',marginBottom:10}}>{
+                <>
+                  <div style={{display:'flex',flexDirection:'column',fontWeight:'bolder'}}>{op.input.map(i => <span>{i}</span>)}</div>
+                  <div style={{color:'red'}}>{op.error}</div>
+                </>
+              }</div>
+            })}
+            {!progressBar && result.finalOutput.map((op,key) => {
+              if(op.opStatus) {
+                return <div style={{display:'flex',color:"blue",marginBottom:10,background:op.opStatus ? "#B6FFCE":"#FFA8A8",padding:20,width:'100%'}}>{
+                  <>
+                    <div style={{fontWeight:'bolder',padding:5}}>Testcase : {key+1}</div>
+                    <div style={{fontWeight:'bolder',padding:5}}>Success</div>
+                  </>
+                }</div>
+              }
+              return <div style={{display:'flex',color:"blue",marginBottom:10,background:op.opStatus ? "#B6FFCE":"#FFA8A8",padding:20,width:'100%'}}>{
+                <>
+                  <div style={{fontWeight:'bolder',padding:5}}>Testcase : {key+1}</div>
+                  <div style={{fontWeight:'bolder',padding:5}}>Failed</div>
+                </>
+              }</div>
+            })}
             {storeOutputError &&  <div style={{color:"red"}}>Compile Error</div>}
            {showOutput && <div> {storeOutput}</div>}
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

@@ -12,6 +12,7 @@ export default function Practice() {
   return (
     <>
       <HomeHeader />
+      <div style={{height:70}}></div>
       <PracticeBanner />
       <PracticeProblems />
       <HomeFooter />

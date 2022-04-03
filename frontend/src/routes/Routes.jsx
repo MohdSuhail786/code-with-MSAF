@@ -19,6 +19,7 @@ import AppContext from "../context/AppContext";
 import Practice from "../components/utilityComponent/Practice/Practice";
 import Ratings from "../components/utilityComponent/Ratings/Ratings";
 import Contest from "../components/utilityComponent/Contest/Contest";
+import CodeEditor from "../components/utilityComponent/CodeEditor/CodeEditor";
 
 function AppSwitch() {
   const appContext = useContext(AppContext)
@@ -57,6 +58,7 @@ function AppSwitch() {
           <Route exact path='/practice' children={<Practice />} />
           <Route exact path='/ratings' children={<Ratings />} />
           <Route exact path='/contest' children={<Contest />} />
+          <Route exact path='/test' children={<CodeEditor lang={"c"} />} />
           <Route exact path={problemWithCode} children={<Problem />} />
 
         </Switch>

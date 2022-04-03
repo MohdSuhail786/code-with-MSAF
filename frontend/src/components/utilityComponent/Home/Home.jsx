@@ -14,6 +14,7 @@ const Home = () => {
         <>
             <HomeHeader />
             {/* <HomeNavbar /> */}
+            <div style={{height:70}}></div>
             <HomeCarousel />
             <HomeTopPerformer />
             <EventAndContest />

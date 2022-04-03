@@ -6,17 +6,20 @@ import useAuth from "./components/utilityComponent/customHooks/useAuth";
 import {store} from "./redux/storeConfig/store"
 import {Provider} from 'react-redux'
 import "./App.css"
-import { withRouter } from "react-router-dom";
+import LoginPopup from "./components/student/LoginPopup/LoginPopup";
+import useLoginPopup from "./components/utilityComponent/customHooks/useLoginPopup";
 
 
 function App() {
   const {snackbar,showSnackbar,closeSnackbar} = useSnackbar()
+  const {loginpopup,showLoginPopup,closeLoginPopup} = useLoginPopup();
   const {userRole,setUserRole} = useAuth()
 
   return (
     <Provider store = {store}>
-      <AppContext.Provider value={{showSnackbar,userRole,setUserRole}}>  
+      <AppContext.Provider value={{showSnackbar,userRole,setUserRole,showLoginPopup}}>  
         <Alert {...snackbar} onClose={closeSnackbar}/>
+        <LoginPopup {...loginpopup} onClose={closeLoginPopup}/>
         <AppRoutes />
       </AppContext.Provider>
     </Provider>

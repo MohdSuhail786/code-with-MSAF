@@ -4,7 +4,7 @@ import {isUserLoggedIn,getUserData,getHomeRouteForLoggedInUser} from "../../../u
 const HomeHeader = () => {
   return (
     <>
-      <header className="m-header-one">
+      <header className="m-header-one fixed-top">
         <div className="l-header">
           <div className="l-header__logo">
             <div className="l-header__image-2">
