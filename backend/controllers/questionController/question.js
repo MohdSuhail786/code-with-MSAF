@@ -48,7 +48,7 @@ exports.getQuestion = async (req,res) => {
         }
         const {problemCode} = req.query
         const question = await fetchQuestion(problemCode)
-        const testcases = await fetchTestcase(problemCode)
+        const testcases = await fetchTestcase(problemCode,"sample")
         if(!question || testcases.length == 0) {
             throw "Question not found"
         }

@@ -2,8 +2,9 @@ const router = require('express').Router()
 const { compile } = require('../controllers/compilerController/compiler');
 const questionController = require('../controllers/questionController/question');
 const userController = require('../controllers/userController/user');
+const { auth } = require('../middlewares/auth');
 
-router.post('/code/submit',compile)
+router.post('/code/submit',auth,compile)
 router.get('/',(req,res)=>res.json("Welcome to coding worm"))
 
 router.get('/question',questionController.getQuestion)

@@ -25,7 +25,19 @@ const fetchUser = async (email) => {
     }
 }
 
+const updateUserScore = async (id,amount) => {
+    try {
+        const user = await User.findById(id);
+        user.score += amount;
+        await user.save();
+    } catch (err) {
+        logger.error(err)
+        throw err
+    }
+}
+
 module.exports = {
     saveUser,
-    fetchUser
+    fetchUser,
+    updateUserScore,
 }

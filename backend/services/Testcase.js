@@ -24,10 +24,12 @@ const updateTestcase = async (testcase,id) => {
     }
 }
 
-const fetchTestcase = async (problemCode) => {
+const fetchTestcase = async (problemCode,type=null) => {
     try {
         logger.info(`Going to fetch testcase : problemCode = ${problemCode}`)
-        const testcase = await Testcase.find({problemCode})
+        let query = {problemCode}
+        if(type) query = {...query,type}
+        const testcase = await Testcase.find(query)
         logger.info(`Testcase fetched successfully`)
         return testcase
     } catch (err) {
