@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import { adminHomeRoute, adminLoginRoute, organizationHomeRoute, organizationLoginRoute, organizationRegisterRoute, problemWithCode, problemwithcode, role, studentHomeRoute, studentLoginRoute, studentRegisterRoute, studentSettingRoute, STUDENT_TEMPLATE_ROUTE } from "../config";
+import { adminHomeRoute, adminLoginRoute, organizationHomeRoute, organizationLoginRoute, organizationRegisterRoute, problemWithCode, problemwithcode, role, studentHomeRoute, studentLoginRoute, studentRegisterRoute, studentSettingRoute, STUDENT_TEMPLATE_ROUTE,organizationEventRoute } from "../config";
 import { getHomeRouteForLoggedInUser, isUserLoggedIn } from "../utils";
 import Problem from "../components/utilityComponent/Problem/Problem";
 import OrgDashboard from "../components/organization/Dashboard/Dashboard"
@@ -20,6 +20,7 @@ import Practice from "../components/utilityComponent/Practice/Practice";
 import Ratings from "../components/utilityComponent/Ratings/Ratings";
 import Contest from "../components/utilityComponent/Contest/Contest";
 import CodeEditor from "../components/utilityComponent/CodeEditor/CodeEditor";
+import Event from "../components/organization/Event/Event"
 
 function AppSwitch() {
   const appContext = useContext(AppContext)
@@ -36,6 +37,7 @@ function AppSwitch() {
           appContext.userRole === role.organization && 
           <Switch>
             <Route exact path={organizationHomeRoute} children={<OrgDashboard />} />
+           
           </Switch>
         }
         {
@@ -60,6 +62,7 @@ function AppSwitch() {
           <Route exact path='/contest' children={<Contest />} />
           <Route exact path='/test' children={<CodeEditor lang={"c"} />} />
           <Route exact path={problemWithCode} children={<Problem />} />
+          <Route exact path ={organizationEventRoute} children={<Event/>}/>
 
         </Switch>
       </Router>

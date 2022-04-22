@@ -4,6 +4,8 @@ import signup from '../../components/student/Signup/store/reducer'
 import code from '../../components/utilityComponent/CodeEditor/store/reducer'
 import result from '../../components/utilityComponent/Problem/store/reducer'
 import progressBar from '../../components/utilityComponent/CircularProgress/store/reducer'
+import codingQuestionReducer from '../../components/organization/Table/store/reducer'
+
 
 const rootReducer = combineReducers({
     auth,
@@ -11,6 +13,7 @@ const rootReducer = combineReducers({
     code,
     result,
     progressBar,
+    codingQuestionReducer
 })
 
 export default rootReducer
