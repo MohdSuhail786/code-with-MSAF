@@ -37,6 +37,18 @@ const fetchQuestion = async (problemCode) => {
     }
 }
 
+const fetchQuestions = async () => {
+    try {
+        logger.info(`Going to fetch questions`)
+        const question = await Question.find()
+        logger.info(`Question fetched successfully`)
+        return question
+    } catch (err) {
+        logger.error(err)
+        throw err
+    }
+}
+
 const deleteQuestion = async (problemCode) => {
     try {
         logger.info(`Going to delete question : id = ${problemCode}`)
@@ -49,9 +61,23 @@ const deleteQuestion = async (problemCode) => {
     }
 }
 
+const problemOfTheDay = async () => {
+    try {
+        logger.info(`Going to fetch problem of the day`)
+        const question = await Question.findOne({problemOfTheDay:true},{name:1,problemCode:1,_id:0})
+        logger.info(`Problem of the day fetched successfully`)
+        return question
+    } catch (err) {
+        logger.error(err)
+        throw err
+    }
+}
+
 module.exports = {
     saveQuestion,
     updateQuestion,
     fetchQuestion,
-    deleteQuestion
+    deleteQuestion,
+    fetchQuestions,
+    problemOfTheDay
 }

@@ -17,9 +17,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mobile: {
+        type: String,
+    },
+    collegeName: {
+        type: String,
+    },
     score: {
         type: Number,
         default: 0
+    },
+    verificationCode: String,
+    status: {
+        type: Boolean,
+        default: false
+    },
+    blocked: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,

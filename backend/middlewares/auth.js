@@ -22,3 +22,9 @@ exports.auth = async (req,res,next) => {
       return res.json({message:"Unauthorized"}).status(400);
     }
   }
+
+  exports.getUserFromAccessToken = async (accessToken) => {
+    if(accessToken == 'undefined') return null;
+    const {user} = await jwt.verify(accessToken,process.env.SECRET_KEY)
+    return user;
+  }

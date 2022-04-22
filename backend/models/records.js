@@ -9,6 +9,19 @@ const recordSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        status: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        language: {
+            type: String,
+            required: true
+        },
+        level: {
+            type: String,
+            required: true
+        },
         createdAt: {
             type: Date,
             default: Date.now()

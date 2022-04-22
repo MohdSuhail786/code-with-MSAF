@@ -5,6 +5,7 @@ const { fetchQuestion } = require('../../services/Question');
 const { checkRecords, saveRecord } = require('../../services/RecordService');
 const { fetchTestcase } = require('../../services/Testcase');
 const { updateUserScore } = require('../../services/UserService');
+const { updateQuestion } = require('../../services/Question');
 
 exports.compile = async (req,res) =>{
     try {
@@ -38,12 +39,17 @@ exports.compile = async (req,res) =>{
             }
             else result.push({...output,input:testCase.input,expectedOutput:testCase.output});
         }
+        const question = await fetchQuestion(problem_code)
+        if(type == null && !solved){
+            await updateQuestion({$inc:{wrongSubmission:1}},question._id)
+            await saveRecord({problemCode:problem_code,userId:req.user._id,status:false,language:lang,level:question.level})
+        }
         if(type == null && solved) {
-            const alreadySolved = await checkRecords({problemCode:problem_code,userId:req.user._id})
+            const alreadySolved = await checkRecords({problemCode:problem_code,userId:req.user._id,status:true})
             if(!alreadySolved) {
-                await saveRecord({problemCode:problem_code,userId:req.user._id})
-                const question = await fetchQuestion(problem_code)
+                await saveRecord({problemCode:problem_code,userId:req.user._id,status:true,language:lang,level:question.level})
                 await updateUserScore(req.user._id,Number(question.point))
+                await updateQuestion({$inc:{correctSubmission:1}},question._id)
             } 
         }
         return res.json({data:result,status:true,type,solved});

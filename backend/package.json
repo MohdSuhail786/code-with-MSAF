@@ -19,7 +19,10 @@
     "jsonwebtoken": "^8.5.1",
     "log4js": "^6.3.0",
     "mongoose": "^6.0.11",
+    "nodemailer": "^6.7.3",
     "nodemon": "^2.0.13",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "reactstrap": "^9.0.2",
+    "sib-api-v3-sdk": "^8.3.0"
   }
 }
