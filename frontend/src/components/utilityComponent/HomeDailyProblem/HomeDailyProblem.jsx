@@ -1,6 +1,15 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DEFAULT_PRACTICE_ROUTE } from "../../../config";
+import { getProblemOfTheDay } from "./store/action";
 
 const HomeDailyProblem = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProblemOfTheDay());
+  }, []);
+  const {problem} = useSelector(state => state.problemOfTheDay);
+
   return (
     <>
       <section className="l-section-1">
@@ -20,10 +29,10 @@ const HomeDailyProblem = () => {
                 skills.
               </p>
               <p className="m-card-11_head-2 l-margin-bottom-24">
-                Today’s Problem: Lazy Salesman
+                Today’s Problem: {problem.name}
               </p>
               <div className="l-button-1">
-                <a href="/problem/ARR01" className="m-button-1">
+                <a href={`/problem/${problem.problemCode}`} className="m-button-1">
                   Solve the Problem<i className="i-arrow-no-tail-blue"></i>
                 </a>
               </div>

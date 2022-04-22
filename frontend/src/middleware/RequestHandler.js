@@ -2,8 +2,8 @@
 
 import { setUserData } from "../utils";
 
-const proxy = "https://codingworms.herokuapp.com";
-// const proxy = "http://localhost:8000";
+// const proxy = "https://codingworms.herokuapp.com";
+const proxy = "http://localhost:8000";
 export async function fetchData(path,requestOptions) {
     
     requestOptions.headers = {

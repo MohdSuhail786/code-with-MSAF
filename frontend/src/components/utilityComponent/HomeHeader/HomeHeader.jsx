@@ -1,7 +1,10 @@
 import "./HomeHeader.css"
 import Logo from "../../../assets/images/logo_.png"
 import {isUserLoggedIn,getUserData,getHomeRouteForLoggedInUser} from "../../../utils/index"
+import { useLocation } from "react-router-dom";
 const HomeHeader = () => {
+  const location = useLocation()
+  console.log(location)
   return (
     <>
       <header className="m-header-one fixed-top">
@@ -27,8 +30,8 @@ const HomeHeader = () => {
           </div>
           <div className="l-header__user-block">
             <div>
-              {!isUserLoggedIn() ? <a className="m-login-button px-4 py-2" href="/login">New User / Login</a> :
-              <a className="m-login-button px-4 py-2" href={getHomeRouteForLoggedInUser(getUserData().role)}>Dashboard</a> }
+              {!isUserLoggedIn() ? <a className="m-login-button px-4 py-2" href={"/login?ref=" + location.pathname + location.search}>New User / Login</a> :
+              <a className="m-login-button px-4 py-2" href={'/dashboard'}>Dashboard</a> }
             </div>
           </div>
         </div>

@@ -23,9 +23,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { runCode } from "./store/action";
 import {hideProgressBar, showProgressBar} from "../CircularProgress/store/action"
 import { isUserLoggedIn } from "../../../utils";
+import {useHistory,useLocation} from "react-router-dom";
 
 function Problem() {
   const appContext = useContext(AppContext);
+  const history = useHistory();
+  const location = useLocation();
   const {_problemCode} = useParams();
   // const [state,setState] = useState({question:{},testcases:[]})
   const dispatch = useDispatch()
@@ -67,12 +70,13 @@ console.log(_problemCode)
 
   async function handleRunCode() {
     if(!isUserLoggedIn()) {
-      return appContext.showLoginPopup({callback:async()=>{
-        payload = {...payload,type:"sample"}
-        dispatch(showProgressBar())
-        await dispatch(runCode(payload))
-        dispatch(hideProgressBar())
-      }})
+      // return appContext.showLoginPopup({callback:async()=>{
+      //   payload = {...payload,type:"sample"}
+      //   dispatch(showProgressBar())
+      //   await dispatch(runCode(payload))
+      //   dispatch(hideProgressBar())
+      // }})
+      return history.push("/login?ref="+location.pathname+location.search)
     }
     payload = {...payload,type:'sample'}
     dispatch(showProgressBar())
@@ -224,7 +228,7 @@ console.log(_problemCode)
           </div>
         </div>
         <div style={{ width: "56vw", borderBottom: "6px solid whiteSmoke",flex:1,overflowY:"scroll" }}>
-          <CodeEditor lang={codeLanguage} problem_code={_problemCode}/>
+          <CodeEditor lang={codeLanguage} problem_code={_problemCode} template={data.templates[codeLanguage]}/>
         </div>
         <div className="run_code">
           <button onClick={handleRunCode}>Run Code</button>

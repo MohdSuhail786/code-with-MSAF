@@ -1,4 +1,6 @@
 import { DEFAULT_PRACTICE_ROUTE } from "../../../config";
+import Banner from "../../../assets/images/banner.png"
+import BannerMobile from "../../../assets/images/banner-mobile.png"
 
 const HomeCarousel = () => {
   return (
@@ -7,11 +9,11 @@ const HomeCarousel = () => {
         <div className="m-image-with-text__image-1">
           <a href={DEFAULT_PRACTICE_ROUTE}>
             <img
-              src="https://cdn.codechef.com/download/banner/1646624941.png"
+              src={Banner}
               className="m-slider__desktop-image"
             />
             <img
-              src="https://cdn.codechef.com/download/banner/mobile-1646188802.png"
+              src={BannerMobile}
               className="m-slider__mobile-image"
             />
           </a>

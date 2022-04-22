@@ -8,6 +8,7 @@ import AppContext from "../../../context/AppContext"
 import { signup } from "./store/action"
 import { useHistory } from "react-router-dom"
 import { studentLoginRoute } from "../../../config"
+import { useLayoutEffect } from "react"
 
 function Signup() {
 
@@ -16,24 +17,21 @@ function Signup() {
     email:'',
     password:''
   })
-  const dispatch = useDispatch()
   const appContext = useContext(AppContext)
-  const store = useSelector(state => state.signup)
-  const history = useHistory();
 
   const signUp = () => {
-    dispatch(signup(state))
+    signup(state)
+    .then(res => {
+      let severity = "error"
+      if(res.status) {
+        severity = "success"
+      }
+      appContext.showSnackbar({message:res.data,severity})
+    })
+    .catch(err => {
+      appContext.showSnackbar({message:"Bad Request",severity:'error'})
+    })
   }
-
-  useEffect(()=>{
-    if(store.response.status === null) return;
-    if(!store.response.status) {
-      appContext.showSnackbar({message:store.response.data,severity:'error'})
-      return;
-    }
-    history.push(studentLoginRoute)
-    appContext.showSnackbar({message:store.response.data,severity:'success'})
-  },[store.response])
 
   return (
     <>

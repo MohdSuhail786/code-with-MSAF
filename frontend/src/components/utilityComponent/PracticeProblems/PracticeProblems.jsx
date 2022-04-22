@@ -7,11 +7,25 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { Chip } from "@mui/material";
+import useFetch from "../customHooks/useFetch";
+import { isUserLoggedIn } from "../../../utils";
 
 const columns = [
   { id: "s.no", label: "#", minWidth: 100 },
-  { id: "code", label: "Problem Code", minWidth: 100 },
+  { id: "problemCode", label: "Problem Code", minWidth: 100 },
   { id: "name", label: "Name", minWidth: 170 },
+  {
+    id: "level",
+    label: "Difficulty",
+    minWidth: 170,
+    align: "center",
+  },
+  {
+    id: "point",
+    label: "Points",
+    minWidth: 170,
+    align: "center",
+  },
   {
     id: "submission",
     label: "Submission",
@@ -24,16 +38,20 @@ const columns = [
     label: "Accuracy",
     minWidth: 170,
     align: "center",
-    format: (value) => value.toLocaleString("en-US"),
+    format: (value) => value.toLocaleString("en-US") + " %",
   },
-  {
+];
+
+const useColumns = {
+  true: [...columns,{
     id: "status",
     label: "Status",
     minWidth: 170,
     align: "center",
     format: (value) => value.toFixed(2),
-  },
-];
+  },],
+  false: columns
+}
 
 const rows = [
   {
@@ -92,7 +110,8 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  const {data,waiting,error} = useFetch(`/top/questions`,"GET")
+  console.log(data?.question)
   return (
     <>
     <head>
@@ -109,7 +128,7 @@ export default function StickyHeadTable() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns.map((column) => (
+                {useColumns[isUserLoggedIn() ? 'true':'false'].map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
@@ -121,8 +140,7 @@ export default function StickyHeadTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              {!waiting && data?.question.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, i) => {
                   return (
                     <TableRow
@@ -131,7 +149,7 @@ export default function StickyHeadTable() {
                       tabIndex={-1}
                       key={row.code}
                     >
-                      {columns.map((column) => {
+                      {useColumns[isUserLoggedIn() ? 'true':'false'].map((column) => {
                         const value =
                           column.id == "s.no" ? i + 1 : row[column.id];
                         if (column.id == "status") {
@@ -160,7 +178,7 @@ export default function StickyHeadTable() {
                               sx={{ color: "#2a67b1" }}
                               align={column.align}
                             >
-                              <a style={{color:'#0d6efd'}} href={`/problem/${row.code}`}>{value}</a>
+                              <a style={{color:'#0d6efd'}} href={`/problem/${row.problemCode}`}>{value}</a>
                             </TableCell>
                           );
                         }
@@ -181,7 +199,7 @@ export default function StickyHeadTable() {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={data?.question?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -6,6 +6,7 @@ import useAuth from "./components/utilityComponent/customHooks/useAuth";
 import {store} from "./redux/storeConfig/store"
 import {Provider} from 'react-redux'
 import "./App.css"
+import "./components/sofia/styles/app.scss"
 import LoginPopup from "./components/student/LoginPopup/LoginPopup";
 import useLoginPopup from "./components/utilityComponent/customHooks/useLoginPopup";
 

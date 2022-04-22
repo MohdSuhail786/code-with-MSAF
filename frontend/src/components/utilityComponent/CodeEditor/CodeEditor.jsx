@@ -6,7 +6,7 @@ import {javaLanguage} from "@codemirror/lang-java"
 import { saveCode } from './store/action';
 import { useDispatch } from 'react-redux';
 
-export default function CodeEditor({lang,problem_code}) {
+export default function CodeEditor({lang,problem_code,template}) {
     const dispatch = useDispatch()
     const langExtension = () => {
         switch (lang) {
@@ -21,7 +21,7 @@ export default function CodeEditor({lang,problem_code}) {
     return (
     <>
     <CodeMirror
-      value={"Default template of user"}
+      value={template}
       extensions={[langExtension()]}
       height='40vh'
       onChange={(value) => {

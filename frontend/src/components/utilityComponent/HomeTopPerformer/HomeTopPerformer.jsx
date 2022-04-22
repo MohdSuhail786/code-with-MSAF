@@ -1,4 +1,13 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getTopPerformers } from "./store/action";
+
 export default function HomeTopPerformer() {
+  const dispatch = useDispatch();
+  useEffect (() => {
+    dispatch(getTopPerformers())
+  }, [])
+  const topPerformers = useSelector(state => state.topPerformers)
   return (
     <>
       <section className="l-section l-section--yellow-5 mt-5">
@@ -14,110 +23,34 @@ export default function HomeTopPerformer() {
                   Users
                 </p>
                 <p className="m-head__20 l-margin-bottom-16 l-margin-top-0">
-                  Ratings
+                  Score
                 </p>
               </div>
               <div className="l-performers">
-                <div className="l-performer">
+                {
+                  topPerformers.list.map((user,index) => {
+                    return (
+                      <div className="l-performer">
                   <div className="l-performer__number">
-                    <p className="m-performer__number">1.</p>
+                    <p className="m-performer__number">{index+1}.</p>
                   </div>
                   <div className="l-performer__text">
                     <p className="l-performer__username">
-                      <span className="m-user-star" style={{background:'#D0011B'}}>
-                        7&nbsp;&#9733;
-                      </span>
+                    <span class="m-user-star" style={{background:user.rank_color}}>{user.rank}&nbsp;★</span>
                       <a
                         className="m-performer__username"
                         style={{color:'#2a67b1',textDecoration:'none'}}
                         href="#"
                       >
-                        @test-user
+                        {user.name}
                       </a>
                     </p>
-                    <p className="m-performer__rating">4432</p>
+                    <p className="m-performer__rating">{user.score}</p>
                   </div>
                 </div>
-                <div className="l-performer">
-                  <div className="l-performer__number">
-                    <p className="m-performer__number">2.</p>
-                  </div>
-                  <div className="l-performer__text">
-                    <p className="l-performer__username">
-                      <span className="m-user-star" style={{background:'#D0011B'}}>
-                        7&nbsp;&#9733;
-                      </span>
-                      <a
-                        className="m-performer__username"
-                        style={{color:'#2a67b1',textDecoration:'none'}}
-                        href="#"
-                      >
-                        @test-user
-                      </a>
-                    </p>
-                    <p className="m-performer__rating">3160</p>
-                  </div>
-                </div>
-                <div className="l-performer">
-                  <div className="l-performer__number">
-                    <p className="m-performer__number">3.</p>
-                  </div>
-                  <div className="l-performer__text">
-                    <p className="l-performer__username">
-                      <span className="m-user-star" style={{background:'#D0011B'}}>
-                        7&nbsp;&#9733;
-                      </span>
-                      <a
-                        className="m-performer__username"
-                        style={{color:'#2a67b1',textDecoration:'none'}}
-                        href="#"
-                      >
-                        @test-user
-                      </a>
-                    </p>
-                    <p className="m-performer__rating">3084</p>
-                  </div>
-                </div>
-                <div className="l-performer">
-                  <div className="l-performer__number">
-                    <p className="m-performer__number">4.</p>
-                  </div>
-                  <div className="l-performer__text">
-                    <p className="l-performer__username">
-                      <span className="m-user-star" style={{background:'#D0011B'}}>
-                        7&nbsp;&#9733;
-                      </span>
-                      <a
-                        className="m-performer__username"
-                        style={{color:'#2a67b1',textDecoration:'none'}}
-                        href="#"
-                      >
-                        @test-user
-                      </a>
-                    </p>
-                    <p className="m-performer__rating">3061</p>
-                  </div>
-                </div>
-                <div className="l-performer">
-                  <div className="l-performer__number">
-                    <p className="m-performer__number">5.</p>
-                  </div>
-                  <div className="l-performer__text">
-                    <p className="l-performer__username">
-                      <span className="m-user-star" style={{background:'#D0011B'}}>
-                        7&nbsp;&#9733;
-                      </span>
-                      <a
-                        className="m-performer__username"
-                        style={{color:'#2a67b1',textDecoration:'none'}}
-                        href="#"
-                      >
-                        @test-user
-                      </a>
-                    </p>
-                    <p className="m-performer__rating">3046</p>
-                  </div>
-                </div>{" "}
+                    )
+                  })
+                }
                 <hr className="l-card-divider" />
                 <div className="l-card-link-1">
                   <a className="m-card-link-1" href="/ratings">

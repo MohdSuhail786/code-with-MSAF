@@ -225,10 +225,6 @@ const DashboardLayout = ({Children}) => {
               <div className="profile_name">{user.name}</div>
               <div className="job">{user.role.capitalize()}</div>
             </div>
-            {/* <img
-              className="avatar"
-              src="https://media.geeksforgeeks.org/auth/profile/ffw4o40vuawyuitvidgu"
-            ></img> */}
             <Avatar color={['#82CCD9', '#4194A6', '#E88554','#FFCC6B','#F2855C'].sample()} name={user.name} size="40" round/>
           </div>
           <ReactTooltip clickable id="dropdown-items" globalEventOff='click' place="bottom" type="success" effect="solid">
