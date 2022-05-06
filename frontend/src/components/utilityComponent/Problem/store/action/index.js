@@ -2,6 +2,7 @@ import { fetchData } from "../../../../../middleware/RequestHandler"
 
 export const runCode = (payload) => {
     return async dispatch => {
+        console.log(payload, "SUbmit payload")
         const res = await fetchData('/code/submit',{
             body: JSON.stringify(payload),
             method: 'POST'

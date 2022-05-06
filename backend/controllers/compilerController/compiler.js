@@ -6,6 +6,7 @@ const { checkRecords, saveRecord } = require('../../services/RecordService');
 const { fetchTestcase } = require('../../services/Testcase');
 const { updateUserScore } = require('../../services/UserService');
 const { updateQuestion } = require('../../services/Question');
+const { fetchEvent } = require('../../services/EventService');
 
 exports.compile = async (req,res) =>{
     try {
@@ -13,7 +14,7 @@ exports.compile = async (req,res) =>{
         if(!ok) {
             return res.json({data:error,status:false})
         }
-        const {code,lang,problem_code,type} = req.body;
+        const {code,lang,problem_code,type,eventName,date} = req.body;
         const testCases = await fetchTestcase(problem_code,type)
         let output = {};
         let result = [];
@@ -51,6 +52,11 @@ exports.compile = async (req,res) =>{
                 await updateUserScore(req.user._id,Number(question.point))
                 await updateQuestion({$inc:{correctSubmission:1}},question._id)
             } 
+        }
+        if(type == null && eventName) {
+            const event = await fetchEvent({name:eventName})
+            event.submissions.push({userId:req.user._id,problemCode:problem_code,problemName:question.name,user:req.user.name,email:req.user.email,status:solved,language:lang,level:question.level,date,college:req.user.collegeName})
+            await event.save()
         }
         return res.json({data:result,status:true,type,solved});
     } catch (err) {

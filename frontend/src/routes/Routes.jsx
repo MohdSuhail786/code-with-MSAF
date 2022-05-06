@@ -19,7 +19,7 @@ import { useContext } from "react";
 import AppContext from "../context/AppContext";
 import Practice from "../components/utilityComponent/Practice/Practice";
 import Ratings from "../components/utilityComponent/Ratings/Ratings";
-import Contest from "../components/utilityComponent/Contest/Contest";
+import Event from "../components/utilityComponent/Event/Event";
 import VerifyAccount from "../components/utilityComponent/VerifyAccount/VerifyAccount";
 import CodeEditor from "../components/utilityComponent/CodeEditor/CodeEditor";
 import Login from "../components/sofia/pages/login/Login";
@@ -27,6 +27,8 @@ import Register from "../components/sofia/pages/register/Register";
 import Dashboard from "../components/sofia/pages/dashboard/Dashboard";
 import Layout from "../components/sofia/components/Layout/Layout";
 import RegisterInstitute from "../components/sofia/pages/register/RegisterInstitute";
+import EventSubmissions from "../components/sofia/pages/EventSubmissions/EventSubmissions";
+import EventLeaderboard from "../components/sofia/pages/EventLeaderboard/EventLeaderboard";
 
 function AppSwitch() {
   const appContext = useContext(AppContext)
@@ -50,7 +52,11 @@ function AppSwitch() {
           <Route exact path='/' children={<Home />} />
           <Route exact path='/practice' children={<Practice />} />
           <Route exact path='/ratings' children={<Ratings />} />
-          <Route exact path='/contest' children={<Contest />} />
+          <Route exact path='/contest' children={<Event />} />
+          <Route exact path='/event/:eventName' children={<Event />} />
+          <Route exact path='/event/:eventName/leaderboard' children={<EventLeaderboard />} />
+          <Route exact path='/event/:eventName/submissions' children={<EventSubmissions />} />
+          <Route exact path='/event/:eventName/:_problemCode' children={<Problem />} />
           <Route exact path={problemWithCode} children={<Problem />} />
           <Route exact path='/verify-account/:id/:verificationCode' children={<VerifyAccount />} />
         </Switch>

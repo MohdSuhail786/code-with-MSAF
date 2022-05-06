@@ -25,7 +25,7 @@ router.get('/verify-token',userController.verifyToken)
 router.post('/refresh-token',userController.refreshToken)
 
 router.post('/event',eventController.addEvent);
-router.get('/event',eventController.getEvent);
+router.get('/event',auth,eventController.getEvent);
 router.put('/event',eventController.updateEvent);
 router.delete('/event',eventController.deleteEvent);
 router.get('/upcomingEvent',eventController.upcomingEvent);

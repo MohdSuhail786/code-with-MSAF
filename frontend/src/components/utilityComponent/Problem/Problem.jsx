@@ -29,8 +29,9 @@ function Problem() {
   const appContext = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
-  const {_problemCode} = useParams();
+  const {_problemCode,eventName} = useParams();
   // const [state,setState] = useState({question:{},testcases:[]})
+  console.log(eventName, "Event Name")
   const dispatch = useDispatch()
   const [codeLanguage, setCodeLanguage] = React.useState("c");
   const [theme, setTheme] = React.useState("xcode");
@@ -78,7 +79,7 @@ console.log(_problemCode)
       // }})
       return history.push("/login?ref="+location.pathname+location.search)
     }
-    payload = {...payload,type:'sample'}
+    payload = {...payload,type:'sample',eventName,date:new Date()}
     dispatch(showProgressBar())
     await dispatch(runCode(payload))
     dispatch(hideProgressBar())
@@ -87,13 +88,13 @@ console.log(_problemCode)
   async function handleSubmitCode() {
     if(!isUserLoggedIn()) {
       return appContext.showLoginPopup({callback:async()=>{
-        payload = {...payload,type:null}
+        payload = {...payload,type:null,eventName,date:new Date()}
         dispatch(showProgressBar())
         await dispatch(runCode(payload))
         dispatch(hideProgressBar())
       }})
     }
-    payload = {...payload,type:null}
+    payload = {...payload,type:null,eventName,date:new Date()}
     dispatch(showProgressBar())
     await dispatch(runCode(payload))
     dispatch(hideProgressBar())

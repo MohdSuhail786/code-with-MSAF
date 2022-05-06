@@ -18,7 +18,10 @@ const eventSchema = new mongoose.Schema({
         type: [],
         required: true
     },
-    event_oraganizer: {
+    submissions: {
+        type: [],
+    },
+    event_organizer: {
         type:  mongoose.Types.ObjectId,
         required:true
         

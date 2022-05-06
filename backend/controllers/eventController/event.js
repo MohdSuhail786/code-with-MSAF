@@ -1,6 +1,9 @@
 const { isEmpty, validate } = require("../../middlewares/validator");
-const eventModel = require("../../models/event")
+const eventModel = require("../../models/event");
+const { getEvent, fetchEvent } = require("../../services/EventService");
 const { logger } = require("../../services/Logger");
+const { fetchQuestion } = require("../../services/Question");
+const { fetchUserById } = require("../../services/UserService");
 
 const getDate = async()=>{
     let date = new Date();
@@ -29,12 +32,43 @@ exports.addEvent = async (req,res) => {
 
 exports.getEvent = async (req,res) => {
     try {
-        // const {userId} = req.user;
-         const userId ="62446d240e75067a8c2769da"
-         const data = await eventModel.find({event_oraganizer:userId});
-         return res.status(200).json({data,status:true})
+         const {name} = req.query
+         // todo: check if user is allowed to access this event
+         let event = await fetchEvent({name})
+         if(!event) {
+             return res.status(500).json({data:"Event not found",status:false})
+         }
+         console.log("TIming ")
+         const currentDate = new Date()
+         let counter_heading = "Starts In"
+         let remaining_time = Math.abs((currentDate.getTime() - event.begin_time.getTime()) / 1000);
+         if(currentDate >= event.begin_time && currentDate <= event.end_time) {
+            counter_heading = "Ends In"
+            remaining_time = Math.abs((currentDate.getTime() - event.end_time.getTime()) / 1000);
+         }
+         if(currentDate > event.end_time) {
+             counter_heading = "Event Completed!"
+             remaining_time = 0
+         }
+         console.log(counter_heading,remaining_time, "TIming")
+         event['questions'] = await Promise.all(event.questions.map(async problemCode => 
+             {
+
+                 const question =  await fetchQuestion(problemCode)
+                 const correctSubmission = event.submissions.filter(submission => (submission.problemCode === problemCode && submission.status)).length;
+                 const inCorrectSubmission = event.submissions.filter(submission => (submission.problemCode === problemCode && submission.status == false)).length;
+                 let successRate = correctSubmission/(inCorrectSubmission + correctSubmission) * 100;
+                 successRate = Number.isNaN(successRate) ? 0 : successRate
+                 successRate = successRate.toFixed(2)
+                 const solved = event.submissions.filter(submission => (submission.problemCode === problemCode && submission.userId === req.user._id && submission.status)).length == 0? false:true
+                 return {...question.toObject(),correctSubmission,inCorrectSubmission,successRate,solved}
+            }
+         ))
+         const eventOrganizer = await fetchUserById(event.event_organizer)
+         return res.status(200).json({data:{...event.toObject(),event_organizer_name: eventOrganizer.collegeName,counter_heading,remaining_time},status:true})
     } catch (err) {
         logger.error(err)
+        console.log(err)
         return res.status(500).json({data:err,status:false})
     }
 }

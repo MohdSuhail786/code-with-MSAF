@@ -95,6 +95,7 @@ export default function EditProfile() {
                   id="collegeName"
                   type="text"
                   className="form-control  "
+                  disabled={user.role === 'organization'}
                   value={state.collegeName}
                   onChange={(event)=>{setState({...state,collegeName:event.target.value})}}
                 />

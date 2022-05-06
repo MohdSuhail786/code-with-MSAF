@@ -18,7 +18,7 @@ exports.auth = async (req,res,next) => {
       req.user = jwtData.user
       next()
     } catch(err) {
-      console.log(err.message)
+      console.log(err.message,"ABC")
       return res.json({message:"Unauthorized"}).status(400);
     }
   }

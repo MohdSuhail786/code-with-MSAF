@@ -9,6 +9,7 @@ import sidebar from '../../components/sofia/components/Sidebar/store/reducer'
 import userDetails from '../../components/sofia/pages/dashboard/store/reducer'
 import heatmap from '../../components/sofia/pages/uielements/charts/components/store/reducer'
 import standing from '../../components/sofia/pages/rank/store/reducer'
+import event from '../../components/utilityComponent/Event/store/reducer'
 const rootReducer = combineReducers({
     auth,
     code,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     heatmap,
     userDetails,
     standing,
+    event,
 })
 
 export default rootReducer

@@ -1,0 +1,541 @@
+*{
+    -webkit-text-size-adjust: 100%;
+    --color-shade-medium-2-rgb: 183,201,204;
+    --color-multivalue-box-shadow: #b3c3c5;
+    --color-hackos-bg: #4691f6;
+    --color-rating-graph-yaxis-text: #c2c7d0;
+    --color-rating-graph-line: #ccd6eb;
+    --color-rating-graph-gridline: #e6e6e6;
+    --colors-baseWhite: hsl(0, 0%, 100%);
+    --colors-baseBlack: hsl(221, 69%, 6%);
+    --colors-primary50: hsl(140, 60%, 95%);
+    --colors-primary100: hsl(141, 61%, 89%);
+    --colors-primary200: hsl(141, 59%, 69%);
+    --colors-primary300: hsl(141, 60%, 49%);
+    --colors-primary400: hsl(141, 72%, 38%);
+    --colors-primary500: hsl(140, 92%, 28%);
+    --colors-primary600: hsl(141, 92%, 25%);
+    --colors-primary700: hsl(140, 92%, 20%);
+    --colors-primary800: hsl(141, 92%, 15%);
+    --colors-primary900: hsl(140, 92%, 10%);
+    --colors-secondary50: hsl(196, 100%, 97%);
+    --colors-secondary100: hsl(194, 100%, 90%);
+    --colors-secondary200: hsl(194, 100%, 64%);
+    --colors-secondary300: hsl(194, 100%, 44%);
+    --colors-secondary400: hsl(202, 91%, 39%);
+    --colors-secondary500: hsl(205, 80%, 34%);
+    --colors-secondary600: hsl(222, 62%, 32%);
+    --colors-secondary700: hsl(222, 62%, 25%);
+    --colors-secondary800: hsl(223, 61%, 20%);
+    --colors-secondary900: hsl(222, 61%, 15%);
+    --colors-neutral50: hsl(180, 20%, 96%);
+    --colors-neutral100: hsl(187, 20%, 92%);
+    --colors-neutral200: hsl(189, 17%, 76%);
+    --colors-neutral300: hsl(187, 13%, 63%);
+    --colors-neutral400: hsl(187, 13%, 51%);
+    --colors-neutral700: hsl(201, 13%, 39%);
+    --colors-neutral800: hsl(214, 16%, 26%);
+    --colors-neutral900: hsl(218, 36%, 9%);
+    --colors-critical50: hsl(350, 75%, 98%);
+    --colors-critical100: hsl(353, 69%, 95%);
+    --colors-critical200: hsl(356, 68%, 91%);
+    --colors-critical300: hsl(355, 67%, 87%);
+    --colors-critical400: hsl(355, 66%, 83%);
+    --colors-critical500: hsl(355, 67%, 77%);
+    --colors-critical600: hsl(355, 66%, 71%);
+    --colors-critical700: hsl(355, 67%, 62%);
+    --colors-critical800: hsl(355, 74%, 47%);
+    --colors-critical900: hsl(355, 100%, 26%);
+    --colors-warning50: hsl(30, 67%, 98%);
+    --colors-warning100: hsl(25, 67%, 93%);
+    --colors-warning200: hsl(24, 68%, 88%);
+    --colors-warning300: hsl(25, 67%, 82%);
+    --colors-warning400: hsl(25, 66%, 76%);
+    --colors-warning500: hsl(25, 66%, 68%);
+    --colors-warning600: hsl(25, 67%, 60%);
+    --colors-warning700: hsl(25, 71%, 48%);
+    --colors-warning800: hsl(25, 100%, 35%);
+    --colors-warning900: hsl(25, 100%, 21%);
+    --colors-success50: hsl(175, 67%, 96%);
+    --colors-success100: hsl(175, 66%, 88%);
+    --colors-success200: hsl(175, 67%, 80%);
+    --colors-success300: hsl(175, 66%, 69%);
+    --colors-success400: hsl(175, 67%, 55%);
+    --colors-success500: hsl(175, 100%, 39%);
+    --colors-success600: hsl(175, 100%, 35%);
+    --colors-success700: hsl(175, 100%, 30%);
+    --colors-success800: hsl(175, 100%, 24%);
+    --colors-success900: hsl(175, 100%, 14%);
+    --fonts-sans: Open Sans, Arial, Helvetica, sans-serif;
+    --fonts-mono: Source Code pro, monaco, Courier, monospace;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space-5: 32px;
+    --space-6: 48px;
+    --space-7: 96px;
+    --sizes-1: 4px;
+    --sizes-2: 8px;
+    --sizes-3: 16px;
+    --sizes-4: 24px;
+    --sizes-5: 32px;
+    --sizes-6: 48px;
+    --sizes-7: 64px;
+    --sizes-8: 96px;
+    --sizes-buttonHeightSm: 32px;
+    --sizes-buttonHeight: 40px;
+    --sizes-buttonHeightLg: 48px;
+    --sizes-inputHeight: 40px;
+    --sizes-inputWidth: 320px;
+    --sizes-containerSm: 416px;
+    --sizes-containerMd: 636px;
+    --sizes-containerLg: 856px;
+    --fontSizes-1: 0.64rem;
+    --fontSizes-2: 0.8rem;
+    --fontSizes-3: 1rem;
+    --fontSizes-4: 1.25rem;
+    --fontSizes-5: 1.563rem;
+    --fontSizes-6: 1.953rem;
+    --fontSizes-7: 2.441rem;
+    --fontSizes-8: 3.052rem;
+    --fontSizes-9: 3.815rem;
+    --fontSizes-button: 1rem;
+    --fontSizes-buttonSm: 0.8rem;
+    --fontWeights-1: 400;
+    --fontWeights-2: 600;
+    --fontWeights-3: 700;
+    --lineHeights-0: 1rem;
+    --lineHeights-1: 1.25rem;
+    --lineHeights-2: 1.5rem;
+    --lineHeights-3: 1.75rem;
+    --lineHeights-4: 2rem;
+    --lineHeights-5: 2.5rem;
+    --lineHeights-6: 3.5rem;
+    --lineHeights-7: 3.75rem;
+    --lineHeights-8: 4rem;
+    --lineHeights-9: 4.5rem;
+    --radii-1: 4px;
+    --radii-round: 50%;
+    --radii-pill: 9999px;
+    --zIndices-1: 100;
+    --zIndices-2: 200;
+    --zIndices-3: 300;
+    --zIndices-4: 400;
+    --zIndices-max: 999;
+    --shadows-1: 0px 1px 4px rgba(37, 69, 105, 0.05), 0px 2px 8px rgba(37, 69, 105, 0.05);
+    --shadows-2: 0px 1px 4px rgba(37, 69, 105, 0.1), 0px 3px 12px rgba(37, 69, 105, 0.1);
+    --color-primary: #1ba94c;
+    --color-primary-dark: #068932;
+    --color-error: #d11534;
+    --color-bg: #f3f7f7;
+    --color-bg-2: #e7eeef;
+    --color-white: #fff;
+    --color-link: #097bbf;
+    --color-shade-lighter: #f3f7f7;
+    --color-shade-lighter-2: #f3f7f7;
+    --color-shade-light: #e7eeef;
+    --color-shade-medium: #b7c9cc;
+    --color-shade-medium-2: #b7c9cc;
+    --color-shade-dark: #738f93;
+    --color-shade-darker: #0e141e;
+    --color-text-light: #b7c9cc;
+    --color-text-medium-dark: #39424e;
+    --color-text-dark: #0e141e;
+    --color-text-dark-faded: #576871;
+    --modal-overlay-color: rgba(231,238,239,0.9);
+    --active-tab-color: #000;
+    --select-border-color: #b3b3b3;
+    --shadow-border: 0.1px 1px 4px 0 #e7eeef;
+    --card-shadow-1: #fff;
+    --card-shadow-2: #fff;
+    --font-family-input: SourceCodePro, monaco, Courier, monospace;
+    --font-family-text: OpenSans, Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    --color-dialog-text: var(--color-text-dark-faded);
+  }
+  .challenges-list {
+    width: 50%;
+    color: var(--color-text-medium-dark);
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    /* margin: auto; */
+    margin-top: 100px;
+  }
+
+  .challenges-list .single-item:hover {
+    background-color: #f7f8fb;
+  }
+
+  .single-item:hover .ui-btn-normal {
+    background-color: white;
+  }
+
+  .single-item:hover .challengecard-title {
+    color: var(--color-primary);
+  }
+  
+  .challenge-list-item {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    background-color: transparent;
+    text-decoration: none;
+    box-sizing: inherit;
+    font-weight: 400;
+    font-family: var(--font-family-text);
+    display: block;
+  }
+  
+  .single-item {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    cursor: pointer;
+    box-sizing: inherit;
+    box-shadow: 0 3px 10px 0 rgba(0,0,0,.1);
+    background: var(--card-shadow-1);
+  }
+
+  .contest-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .contest-challenges-problem {
+    cursor: pointer;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    background-color: var(--card-shadow-1);
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    border-top: none;
+  }
+  
+  .content--list_body {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    padding: 30px;
+  }
+  
+  
+  .content--list_header-v2 {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: auto;
+    align-items: center;
+  }
+  
+  .challenge-name-details {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    flex: 1;
+    box-sizing: border-box;
+    margin-right: 60px;
+    width: auto;
+  }
+  
+  .bookmark-cta {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    margin-bottom: 5px;
+    margin-left: auto;
+  }
+  
+  .cta-container {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: border-box;
+    width: auto;
+  }
+  
+  .pull-left {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    float: left;
+    box-sizing: inherit;
+  }
+  
+  .challengecard-title {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    font-size: 21px;
+    color: var(--color-text-dark);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  
+  .card-details {
+    cursor: pointer;
+    color: var(--color-text-dark);
+    border: 0;
+    font: inherit;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    padding-top: 5px;
+    box-sizing: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .difficulty {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    font-weight: 400;
+    font-family: var(--font-family-text);
+    color: #db7100;
+  }
+  
+  .max-score {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    font-weight: 400;
+    font-family: var(--font-family-text);
+    color: var(--color-shade-dark);
+  }
+  
+  .success-ratio {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    font-weight: 400;
+    font-family: var(--font-family-text);
+    color: var(--color-shade-dark);
+  }
+  
+  .ctas {    
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+  
+  }
+  
+  .challenge-submit-btn {
+    cursor: pointer;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    width: 190px;
+  }
+  
+  .ui-btn-normal {
+    line-height: 1.15;
+    margin: 0;
+    overflow: visible;
+    text-transform: none;
+    -webkit-appearance: button;
+    box-sizing: inherit;
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    outline-width: 0;
+    cursor: pointer;
+    transition: all .5s ease;
+    transition-property: box-shadow,background,color,border;
+    padding-right: 20px;
+    padding-left: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: var(--font-family-input);
+    border-radius: 2px;
+    word-spacing: -2px;
+    background-color: var(--color-btn-line-primary-bg,transparent);
+    border-color: var(--color-primary);
+    border: 1px solid var(--color-btn-line-primary-border,var(--color-primary));
+    color: var(--color-primary);
+    width: 100%;
+  }
+  
+  .ui-content {
+    text-transform: none;
+    cursor: pointer;
+    word-spacing: -2px;
+    color: var(--color-primary);
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ui-text {
+    
+    text-transform: none;
+    cursor: pointer;
+    word-spacing: -2px;
+    color: var(--color-primary);
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+    box-sizing: inherit;
+    order: 1;
+    font-weight: 400;
+  }
+  .card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 3px 10px 0 rgba(0,0,0,.1);
+    transition: 0.3s;
+    margin-top: 100px;
+    width: 21rem;
+    margin-left: 30px;
+    position: sticky !important;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 3px 10px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2rem;
+  }
+  .root-react-component-countdown-timer .countBox.left {
+    display: inline-flex;
+    direction: rtl;
+}
+.root-react-component-countdown-timer .countBox .countBoxItem .count {
+  text-align: center;
+}
+.root-react-component-countdown-timer .border .count {
+  height: auto;
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px 5px;
+  flex: 1;
+}
+.displayedTime {
+  text-align: center;
+}
+
+.root-react-component-countdown-timer .countBox.left {
+  border: none !important;
+}
+.counter-heading h5{
+  padding: 10px 0px;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #6e6e6e;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+  border-bottom: 1px solid;
+}
+.counter-heading {
+  padding: 0px 3rem;
+}
+.__react_component_tooltip span {
+  padding: 10px;
+}
